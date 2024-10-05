@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ImpoParPage extends StatefulWidget {
@@ -8,161 +10,134 @@ class ImpoParPage extends StatefulWidget {
 }
 
 class _ImpoParPageState extends State<ImpoParPage> {
+  int playerNumber = 0;
+  int computerNumber = 0;
+  Choice playerChoice = Choice.par;
+
+  void check(int number) {
+    setState(() {
+      playerNumber = number;
+      computerNumber = Random().nextInt(6);
+    });
+    int sum = playerNumber + computerNumber;
+    if (playerChoice == Choice.par) {
+      if (sum.isEven) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 2),
+            content: Text('Venceu'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 2),
+            content: Text('Perdeu'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } else {
+      if (sum.isOdd) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 2),
+            content: Text('Venceu'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 2),
+            content: Text('Perdeu'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Impar ou Par?'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(
-                              'Dicas',
-                              style: TextStyle(fontSize: 32),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text.rich(TextSpan(
-                                text: 'Toque em um dos botões ',
-                                children: [
-                                  TextSpan(
-                                    text: 'ÍMPAR',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  TextSpan(text: ' ou '),
-                                  TextSpan(
-                                    text: 'PAR',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  TextSpan(
-                                      text:
-                                          ' para definir sua intenção de jogo. A seguir, toque em um dos botões de 0 a 5 para selecionar o valor.')
-                                ])),
-                          ),
-                          Text(
-                              'Após selcionar o n;umero desejado, o computador irá realizar um sorteio de outro valor na mesma faixa e indicará se você ganhou ou perdeu com uma mensagem no rodapé da tela.'),
-                          Text('Boa sorte!',
-                              style: TextStyle(
-                                  fontSize: 32, fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-              icon: const Icon(Icons.question_mark))
-        ],
+        title: const Text('ImpoPar'),
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Column(
+            Column(
               children: [
-                Text('Computador'),
-                TextButton(
-                  onPressed: null,
-                  child: Text(
-                    '0',
-                    style: TextStyle(fontSize: 72),
-                  ),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: Text('Computador'),
+                ),
+                ChoiceButton(
+                  number: computerNumber,
+                  color: Theme.of(context).colorScheme.tertiaryContainer,
+                  onpressed: (int) {},
                 ),
               ],
             ),
-            FilledButton(
-              onPressed: () {},
-              child: const Text(
-                '0',
-                style: TextStyle(fontSize: 72),
-              ),
+            ChoiceButton(
+              number: playerNumber,
+              color: Theme.of(context).colorScheme.primaryContainer,
+              onpressed: (int) {},
             ),
-            // const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                alignment: WrapAlignment.center,
-                children: [
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text(
-                      '0',
-                      style: TextStyle(fontSize: 72),
-                    ),
-                  ),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text(
-                      '1',
-                      style: TextStyle(fontSize: 72),
-                    ),
-                  ),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text(
-                      '2',
-                      style: TextStyle(fontSize: 72),
-                    ),
-                  ),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text(
-                      '3',
-                      style: TextStyle(fontSize: 72),
-                    ),
-                  ),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text(
-                      '4',
-                      style: TextStyle(fontSize: 72),
-                    ),
-                  ),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text(
-                      '5',
-                      style: TextStyle(fontSize: 72),
-                    ),
-                  ),
-                ],
-              ),
+            Wrap(
+              runSpacing: 4,
+              spacing: 4,
+              children: [
+                ChoiceButton(
+                  number: 0,
+                  color: Theme.of(context).colorScheme.secondaryFixed,
+                  onpressed: check,
+                ),
+                ChoiceButton(
+                  number: 1,
+                  color: Theme.of(context).colorScheme.secondaryFixed,
+                  onpressed: check,
+                ),
+                ChoiceButton(
+                  number: 2,
+                  color: Theme.of(context).colorScheme.secondaryFixed,
+                  onpressed: check,
+                ),
+                ChoiceButton(
+                  number: 3,
+                  color: Theme.of(context).colorScheme.secondaryFixed,
+                  onpressed: check,
+                ),
+                ChoiceButton(
+                  number: 4,
+                  color: Theme.of(context).colorScheme.secondaryFixed,
+                  onpressed: check,
+                ),
+                ChoiceButton(
+                  number: 5,
+                  color: Theme.of(context).colorScheme.secondaryFixed,
+                  onpressed: check,
+                ),
+              ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
+                FilledButton(
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Venceu!'),
-                        backgroundColor: Colors.green,
-                      ));
+                      playerChoice = Choice.impar;
                     },
-                    child: const Text('IMPAR')),
-                ElevatedButton(
+                    child: const Text('ÍMPAR')),
+                FilledButton(
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Perdeu!'),
-                        backgroundColor: Colors.red,
-                      ));
+                      playerChoice = Choice.par;
                     },
                     child: const Text('PAR'))
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -170,5 +145,49 @@ class _ImpoParPageState extends State<ImpoParPage> {
   }
 }
 
-// 27/09 - William, Daniel, Caua, Chiara, Pedro Otavio, Pedro Beck, Guilerme, Carlao, 
-// Vitor, Valdelaine, Tiago Barros, Tiago, Giovani
+class ChoiceButton extends StatelessWidget {
+  const ChoiceButton({
+    super.key,
+    required this.color,
+    required this.number,
+    this.onpressed,
+  });
+
+  final Color color;
+  final int number;
+  final void Function(int)? onpressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(32),
+      onTap: () {
+        onpressed!(number);
+      },
+      child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          color: color,
+        ),
+        child: Container(
+          width: 100,
+          height: 100,
+          alignment: Alignment.center,
+          child: Text(
+            number.toString(),
+            style: const TextStyle(
+              fontSize: 72,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Courrier',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+enum Choice {
+  par,
+  impar;
+}
