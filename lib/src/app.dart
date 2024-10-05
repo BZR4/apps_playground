@@ -13,10 +13,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/': (context) => const InputsPage(),
+        '/': (context) => const HomePage(),
         '/sounds': (_) => const SoundsPage(),
         '/insanebutton': (_) => const InsanelyButtonPage(),
         '/impopar': (_) => const ImpoParPage(),
+        '/inputs': (_) => const InputsPage(),
       },
     );
   }

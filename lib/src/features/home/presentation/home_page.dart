@@ -60,6 +60,12 @@ class _HomePageState extends State<HomePage> {
               },
               child: const Text('ImpoPar'),
             ),
+            FilledButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/inputs');
+              },
+              child: const Text('Inputs'),
+            ),
           ],
         ),
       ),

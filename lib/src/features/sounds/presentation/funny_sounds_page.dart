@@ -11,19 +11,21 @@ class FunnySoundsPage extends StatefulWidget {
 class _FunnySoundsPageState extends State<FunnySoundsPage> {
   int _selectIndex = 0;
 
+  static void playAudio(String asset) {}
+
   List<Widget> pages = [
     Wrap(
       spacing: 4,
       runSpacing: 4,
       alignment: WrapAlignment.center,
       children: [
-        SoundFunnyButton(text: 'Minecraft', callback: () {}),
-        SoundFunnyButton(text: 'Mario World', callback: () {}),
-        SoundFunnyButton(text: 'Sonic', callback: () {}),
-        SoundFunnyButton(text: 'Pac Man', callback: () {}),
-        SoundFunnyButton(text: 'River Raid', callback: () {}),
-        SoundFunnyButton(text: 'Enduro', callback: () {}),
-        SoundFunnyButton(text: 'Metal Slug', callback: () {}),
+        SoundFunnyButton(text: 'Minecraft', asset: '', callback: playAudio),
+        SoundFunnyButton(text: 'Mario World', asset: '', callback: playAudio),
+        SoundFunnyButton(text: 'Sonic', asset: '', callback: playAudio),
+        SoundFunnyButton(text: 'Pac Man', asset: '', callback: playAudio),
+        SoundFunnyButton(text: 'River Raid', asset: '', callback: playAudio),
+        SoundFunnyButton(text: 'Enduro', asset: '', callback: playAudio),
+        SoundFunnyButton(text: 'Metal Slug', asset: '', callback: playAudio),
       ],
     ),
     Container(
@@ -146,13 +148,15 @@ class SoundFunnyButton extends StatelessWidget {
     this.width = 125,
     this.height = 125,
     required this.text,
+    required this.asset,
     required this.callback,
   });
 
   final double width;
   final double height;
   final String text;
-  final Function callback;
+  final String asset;
+  final void Function(String) callback;
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +165,9 @@ class SoundFunnyButton extends StatelessWidget {
         width: width,
         height: height,
         child: ElevatedButton(
-          onPressed: callback(),
+          onPressed: () {
+            callback(asset);
+          },
           child: Text(text),
         ),
       ),
