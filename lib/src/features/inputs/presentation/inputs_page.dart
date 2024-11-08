@@ -80,9 +80,13 @@ class _InputsPageState extends State<InputsPage> {
                 IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
                 IconButton.filled(onPressed: () {}, icon: Icon(Icons.favorite)),
                 IconButton.outlined(
-                    onPressed: () {}, icon: Icon(Icons.favorite)),
+                  onPressed: () {},
+                  icon: Icon(Icons.favorite),
+                ),
                 IconButton.filledTonal(
-                    onPressed: () {}, icon: Icon(Icons.favorite)),
+                  onPressed: () {},
+                  icon: Icon(Icons.favorite),
+                ),
               ],
             ),
             Padding(
